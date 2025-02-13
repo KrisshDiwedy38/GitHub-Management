@@ -15,13 +15,8 @@ def cont():
          print("Wrong input")
          cont()
 
-def get_token():
-   #Getting the User's Github Token
-   token = input("Enter your personal Github Token: ").strip()
-   return token
-
 def get_headers(token):
-   # Getting headers for Authorization process 
+   # Getting Headers for Authorization 
    return {
          "Authorization": f"Bearer {token}",
          "Accept": "application/vnd.github+json"
@@ -62,7 +57,7 @@ def menu_system(token):
 
 
 def main():
-   token = get_token()
+   token = gitHubToken     #Import your github token here 
    menu_system(token)
    cont()
 
