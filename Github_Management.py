@@ -5,11 +5,11 @@ from github_token import gitHubToken
 
 def cont():
    while True:
-      ask = input("Want to exit (y/n)? ")
-      if ask == 'y':
+      ask = input("Want to continue (y/n)? ")
+      if ask == 'n':
          print("----- Exiting -----")
          return False
-      elif ask == 'n':
+      elif ask == 'y':
          return True
       else:
          print("Wrong input")
@@ -19,19 +19,41 @@ def get_headers(token):
    # Getting Headers for Authorization 
    return {
          "Authorization": f"Bearer {token}",
-         "Accept": "application/vnd.github+json"
+         "Accept": "application/vnd.github+json",
+         "X-GitHub-Api-Version": "2022-11-28"
       }
 
 def create_repo(token):
+   repo_name = input("Enter new repository name: ")
+   description = input("Enter repository description: ")
+   private_repo = input("Is this a private repository ? (y/n) : ")
+
+   if private_repo.lower() == 'n':
+      private_repo = False
+   else:
+      private_repo = True
+
+
+   url = "https://api.github.com/user/repos"
+   headers = get_headers(token)
+
+   data = { "name" : repo_name , "description" : description , "private" : private_repo}
+
    pass
 
 def create_issue(token):
+   url = f"https://api.github.com/repos/{username}/{repo_name}"
+   headers = get_headers(token)
    pass
 
 def list_repo(token):
+   url = "https://api.github.com/user/repos"
+   headers = get_headers(token)
    pass
 
 def delete_repo(token):
+   url = f"https://api.github.com/repos/{username}/{repo_name}"  
+   headers = get_headers(token) 
    pass
 
 def menu_system(token):
@@ -41,7 +63,7 @@ def menu_system(token):
    print(" Create an Issue Press 3")
    print(" Delete a Repository Press 4")
     
-   task = input("Enter Your Choice").lower().strip()
+   task = int(input("Enter Your Choice"))
 
    if task == 1:
       create_repo(token)
@@ -59,7 +81,11 @@ def menu_system(token):
 def main():
    token = gitHubToken     #Import your github token here 
    menu_system(token)
-   cont()
+   repeating = cont()
+   if repeating:
+      menu_system()
+   else:
+      return
 
 
 if __name__ == "__main__":
