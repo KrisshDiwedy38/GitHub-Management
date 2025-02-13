@@ -40,7 +40,7 @@ def create_repo(token):
    url = "https://api.github.com/user/repos"
    headers = get_headers(token)
 
-   data = { "name" : repo_name , "description" : description , "private" : private_repo}
+   data = { "name" : repo_name , "description" : description , 'homepage' : f"https://github.com/{repo_name}", "private" : private_repo}
 
    response = requests.post(url, headers=headers, json=data)
 
@@ -89,7 +89,7 @@ def list_repo(token):
    #Extracting Name and URL of Repositories from Stored JSON Data
    print("\n Your Repositories:")
    for repo in repos:
-      print(f"- {repo['name']} ({repo['html_url']})")
+      print(f"-> Name: {repo['name']} | URL: ({repo['html_url']})")
 
 
 #Deleting Repositories
@@ -111,7 +111,7 @@ def delete_repo(token):
       if response.status_code == 204:
          print(f" {repo_name} deleted successfully!")
       else:
-         print(f" ERROR! {repo_name} could not be deleted.") 
+         print(f"ERROR! {repo_name} could not be deleted.") 
    
 def main():
    token = gitHubToken     #Import your github token here 
