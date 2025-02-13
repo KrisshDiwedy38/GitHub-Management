@@ -19,7 +19,7 @@ def cont():
 # Headers for Authorization
 def get_headers(token): 
    return {
-         "Authorization": f"Bearer {token}",
+         'Authorization': f'Bearer {token}',
          "Accept": "application/vnd.github+json",
          "X-GitHub-Api-Version": "2022-11-28"
       }
@@ -47,6 +47,7 @@ def create_repo(token):
    if response.status_code == 201:
       print(f"{repo_name} Created successfully!")
    else:
+      print(response.status_code)
       print(f"ERROR! {repo_name} could not be created.")
 
 
@@ -67,6 +68,7 @@ def create_issue(token):
    if response.status_code == 201:
       print(f" {issue_title} created successfully!")
    else:
+      print(response.status_code)
       print(f"ERROR! {issue_title} could not be created.")
 
 
@@ -111,6 +113,7 @@ def delete_repo(token):
       if response.status_code == 204:
          print(f" {repo_name} deleted successfully!")
       else:
+         print(response.status_code)
          print(f"ERROR! {repo_name} could not be deleted.") 
    
 def main():
