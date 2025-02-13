@@ -1,6 +1,4 @@
 import requests 
-import os 
-import sys
 from github_token import gitHubToken
 
 
