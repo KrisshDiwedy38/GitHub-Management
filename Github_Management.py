@@ -2,7 +2,7 @@ import requests
 from github_token import gitHubToken
 
 
-#Function to ask if user want to continue editing GitHub
+#Function to ask if user want to continue Managing GitHub
 def cont():
    while True:
       ask = input("Want to continue (y/n)? ")
@@ -47,7 +47,7 @@ def create_repo(token):
    if response.status_code == 201:
       print(f"{repo_name} Created successfully!")
    else:
-      print(f"ERROR! {repo_name} could bot be created.")
+      print(f"ERROR! {repo_name} could not be created.")
 
 
 # Creating Issues in Specified Repository
@@ -64,7 +64,7 @@ def create_issue(token):
 
    response = requests.post(url, headers= headers, json = data)
    
-   if response == 201:
+   if response.status_code == 201:
       print(f" {issue_title} created successfully!")
    else:
       print(f"ERROR! {issue_title} could not be created.")
@@ -79,13 +79,13 @@ def list_repo(token):
    
    while url:
       response = requests.get(url, headers = headers )
-      if response == 200:
+      if response.status_code == 200:
          repos.extend(response.json())
          url = response.links.get('next' , {}).get('url')   #Handling Pagination
       else:
          print(f"Failed to fetch repositories")
-         break
-
+         return
+   
    #Extracting Name and URL of Repositories from Stored JSON Data
    print("\n Your Repositories:")
    for repo in repos:
@@ -108,42 +108,39 @@ def delete_repo(token):
    else:
       response = requests.delete(url, headers=headers)
 
-      if response == 204:
+      if response.status_code == 204:
          print(f" {repo_name} deleted successfully!")
       else:
          print(f" ERROR! {repo_name} could not be deleted.") 
    
-
-def menu_system(token):
-   print("\nChoose an option:")
-   print(" Create a Repository Press 1")
-   print(" List Your Repositories Press 2")
-   print(" Create an Issue Press 3")
-   print(" Delete a Repository Press 4")
-    
-   task = int(input("Enter Your Choice"))
-
-   if task == 1:
-      create_repo(token)
-   elif task == 2:
-      list_repo(token)
-   elif task == 3:
-      create_issue(token)
-   elif task == 4:
-      delete_repo(token)
-   else:
-      print("Wrong Input")
-      menu_system()
-
-
 def main():
    token = gitHubToken     #Import your github token here 
-   menu_system(token)
-   repeating = cont()
-   if repeating:
-      menu_system()
-   else:
-      return
+   
+   while True:
+      print("\nChoose an option:")
+      print(" Create a Repository Press 1")
+      print(" List Your Repositories Press 2")
+      print(" Create an Issue Press 3")
+      print(" Delete a Repository Press 4")
+      
+      task = int(input("Enter Your Choice: "))
+
+      if task == 1:
+         create_repo(token)
+      elif task == 2:
+         list_repo(token)
+      elif task == 3:
+         create_issue(token)
+      elif task == 4:
+         delete_repo(token)
+      else:
+         print("Wrong Input")
+
+      if cont() == False:
+         return
+      else:
+         continue
+      
 
 
 if __name__ == "__main__":
