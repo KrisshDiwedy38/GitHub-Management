@@ -9,10 +9,10 @@ The **GitHub Management Project** automates common GitHub tasks using the GitHub
 - **Create an Issue in a Repository**
 - **Delete a Repository**
 
-## 🛠️ Technologies Used
-- **Python** 🐍
-- **GitHub REST API** 🔗
-- **Requests Library** 📡
+## Technologies Used
+- **Python** 
+- **GitHub REST API** 
+- **Requests Library** 
 
 ## Authentication
 To interact with the GitHub API, you need to generate a **Personal Access Token (PAT)**:
@@ -49,7 +49,7 @@ python manage_github.py
 | Delete Repo        | `DELETE` | `https://api.github.com/repos/{owner}/{repo}` |
 ```
 
-## 📝 Example Usage
+## Example Usage
 ### **Creating a Repository**
 ```python
 import requests
@@ -66,14 +66,14 @@ data = { 'name' : repo_name , 'description' : repo_desc , 'homepage' f"https://g
 
 response = requests.post(url, headers=headers, json= data)
 if response.status_code == 201:
-  print(f"{repo_name} Created Successfully!)
+  print(f"{repo_name} Created Successfully!")
 else:
     print(f"Error: {response.status_code}, {repo_name} could not be created")
 ```
 
-## 🤝 Contributions
+## Contributions
 Contributions are welcome! Feel free to fork this repository, create a branch, and submit a pull request. 
 
 ---
-### ✨ Happy Coding! 🚀
+### ✨ Happy Coding! 
 
