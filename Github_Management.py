@@ -5,12 +5,12 @@ from github_token import gitHubToken
 #Function to ask if user want to continue Managing GitHub
 def cont():
    while True:
-      ask = input("Want to continue (y/n)? ")
-      if ask == 'n':
+      ask = input("Want to Exit (y/n)? ")
+      if ask == 'y':
          print("----- Exiting -----")
-         return False
-      elif ask == 'y':
          return True
+      elif ask == 'n':
+         return False
       else:
          print("Wrong input")
          cont()
@@ -125,7 +125,7 @@ def main():
       print(" List Your Repositories Press 2")
       print(" Create an Issue Press 3")
       print(" Delete a Repository Press 4")
-      
+      print(" Exit Press 5")
       task = int(input("Enter Your Choice: "))
 
       if task == 1:
@@ -136,14 +136,14 @@ def main():
          create_issue(token)
       elif task == 4:
          delete_repo(token)
+      elif task == 5:
+         if cont() == True:
+            return
+         else:
+            continue
       else:
          print("Wrong Input")
-
-      if cont() == False:
-         return
-      else:
          continue
-      
 
 
 if __name__ == "__main__":
