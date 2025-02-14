@@ -1,7 +1,7 @@
 # GitHub Management Project
 
 ## Overview
-The **GitHub Management Project** automates common GitHub tasks using the GitHub API. This project allows users to create repositories, manage issues, retrieve repository data, print README files, and delete repositories—all through API calls.
+The **GitHub Management Project** automates common GitHub tasks using the GitHub API. This project allows users to create repositories, manage issues, retreive the list of repositories and delete repositories—all through API calls.
 
 ## Features
 - **Create a Repository**
