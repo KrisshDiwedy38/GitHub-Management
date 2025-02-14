@@ -48,7 +48,7 @@ def create_repo(token):
       print(f"{repo_name} Created successfully!")
    else:
       print(response.status_code)
-      print(f"ERROR! {repo_name} could not be created.")
+      print(f"ERROR! {repo_name} could not be created due to error code {response.status_code}.")
 
 
 # Creating Issues in Specified Repository
@@ -69,7 +69,7 @@ def create_issue(token):
       print(f" {issue_title} created successfully!")
    else:
       print(response.status_code)
-      print(f"ERROR! {issue_title} could not be created.")
+      print(f"ERROR! {issue_title} could not be created due to error code {response.status_code}.")
 
 
 #Listing the existing repositories of user
@@ -85,7 +85,7 @@ def list_repo(token):
          repos.extend(response.json())
          url = response.links.get('next' , {}).get('url')   #Handling Pagination
       else:
-         print(f"Failed to fetch repositories")
+         print(f"Failed to fetch repositories due to error code {response.status_code}")
          return
    
    #Extracting Name and URL of Repositories from Stored JSON Data
@@ -114,7 +114,7 @@ def delete_repo(token):
          print(f" {repo_name} deleted successfully!")
       else:
          print(response.status_code)
-         print(f"ERROR! {repo_name} could not be deleted.") 
+         print(f"ERROR! {repo_name} could not be deleted due to error code {response.status_code}.") 
    
 def main():
    token = gitHubToken     #Import your github token here 
