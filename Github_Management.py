@@ -102,7 +102,7 @@ def delete_repo(token):
    url = f"https://api.github.com/repos/{username}/{repo_name}"  
    headers = get_headers(token) 
 
-   #Confirm is the user wants to deleted the repository
+   #Confirm if the user wants to deleted the repository
    confirmation = input(f"Are you sure you want to delete {repo_name}? (y/n) ")
    if confirmation == 'n':
       print("Deletion cancelled")
