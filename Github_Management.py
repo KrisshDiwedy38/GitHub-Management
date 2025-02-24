@@ -38,6 +38,7 @@ def create_repo(token,username):
 
 
    url = "https://api.github.com/user/repos"
+   remote_url = f"https://api.github.com/repos/{username}/{repo_name}"
    headers = get_headers(token)
 
    data = { "name" : repo_name , "description" : description , 'homepage' : f"https://github.com/{repo_name}", "private" : private_repo}
@@ -46,8 +47,10 @@ def create_repo(token,username):
 
    if response.status_code == 201:
       print(f"{repo_name} Created successfully!")
+      created_repo_response = requests.get(remote_url, headers = headers)
+      created_repo_data = created_repo_response.json()
+      print(f"Remote for {repo_name} -> {created_repo_data['clone_url']}")     
    else:
-      print(response.status_code)
       print(f"ERROR! {repo_name} could not be created due to error code {response.status_code}.")
 
 
