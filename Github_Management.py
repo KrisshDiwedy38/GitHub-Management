@@ -25,12 +25,12 @@ def get_headers(token):
       }
 
 #Creating Repositories
-def create_repo(token):
+def create_repo(token,username):
    repo_name = input("Enter new repository name: ").strip()
    description = input("Enter repository description: ").strip()
    private_repo = input("Is this a private repository ? (y/n) : ").strip()
 
-   #Repo Private OR Public
+   #Checking if the repo private OR public
    if private_repo.lower() == 'n':
       private_repo = False
    else:
@@ -52,8 +52,7 @@ def create_repo(token):
 
 
 # Creating Issues in Specified Repository
-def create_issue(token):
-   username = input("Enter GitHub username: ").strip()
+def create_issue(token,username):
    repo_name = input("Enter Repository name: ").strip()
    issue_title = input("Enter Issue Title: ").strip()
    issue_desc = input("Enter Issues description: ").strip()
@@ -66,7 +65,7 @@ def create_issue(token):
    response = requests.post(url, headers= headers, json = data)
    
    if response.status_code == 201:
-      print(f" {issue_title} created successfully!")
+      print(f"{issue_title} created successfully!")
    else:
       print(response.status_code)
       print(f"ERROR! {issue_title} could not be created due to error code {response.status_code}.")
@@ -89,54 +88,54 @@ def list_repo(token):
          return
    
    #Extracting Name and URL of Repositories from Stored JSON Data
-   print("\n Your Repositories:")
+   print("\nYour Repositories:")
    for repo in repos:
       print(f"-> Name: {repo['name']} | URL: ({repo['html_url']})")
 
 
 #Deleting Repositories
-def delete_repo(token):
-   username = input("Enter GitHub username: ").strip()
+def delete_repo(token,username):
    repo_name = input("Enter Repository to be deleted: ").strip()
    
    url = f"https://api.github.com/repos/{username}/{repo_name}"  
    headers = get_headers(token) 
 
    #Confirm if the user wants to deleted the repository
-   confirmation = input(f"Are you sure you want to delete {repo_name}? (y/n) ")
+   confirmation = input(f"\nAre you sure you want to delete {repo_name}? (y/n) ")
    if confirmation == 'n':
-      print("Deletion cancelled")
+      print("\nDeletion cancelled")
       return
    else:
       response = requests.delete(url, headers=headers)
 
       if response.status_code == 204:
-         print(f" {repo_name} deleted successfully!")
+         print(f"\n{repo_name} deleted successfully!")
       else:
          print(response.status_code)
-         print(f"ERROR! {repo_name} could not be deleted due to error code {response.status_code}.") 
+         print(f"\nERROR! {repo_name} could not be deleted due to error code {response.status_code}.") 
    
 def main():
    token = gitHubToken     #Import your github token here 
    
+   username = input("Enter GitHub username: ").strip()
    # Menu System for user 
    while True:
       print("\nChoose an option:")
-      print(" Create a Repository Press 1")
-      print(" List Your Repositories Press 2")
-      print(" Create an Issue Press 3")
-      print(" Delete a Repository Press 4")
-      print(" Exit Press 5")
+      print("Create a Repository Press 1")
+      print("List Your Repositories Press 2")
+      print("Create an Issue Press 3")
+      print("Delete a Repository Press 4")
+      print("Exit Press 5")
       task = int(input("Enter Your Choice: "))
 
       if task == 1:
-         create_repo(token)
+         create_repo(token,username)
       elif task == 2:
          list_repo(token)
       elif task == 3:
-         create_issue(token)
+         create_issue(token,username)
       elif task == 4:
-         delete_repo(token)
+         delete_repo(token,username)
       elif task == 5:
          if cont() == True:
             return
