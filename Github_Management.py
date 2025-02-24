@@ -47,6 +47,7 @@ def create_repo(token,username):
 
    if response.status_code == 201:
       print(f"{repo_name} Created successfully!")
+      #Geting the Clone URL new repo created
       created_repo_response = requests.get(remote_url, headers = headers)
       created_repo_data = created_repo_response.json()
       print(f"Remote for {repo_name} -> {created_repo_data['clone_url']}")     
